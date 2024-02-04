@@ -10,28 +10,49 @@ interface RobotGridProps {
 interface Cell {
     x: number;
     y: number;
-  }
+}
 
 const RobotGrid: React.FC<RobotGridProps> = ({ columns, rows }) => {
     const grid: JSX.Element[] = [];
     // State vairable to hold robot position and set initial state
-    const [robotPosition, setrobotPosition] = useState({ x: 1, y: 1 });
+    const [robotPosition, setrobotPosition] = useState<Cell>({ x: 1, y: 1 });
+    const [buttonClickError, setButtonClickError] = useState<boolean>(false);
 
     // Function: for move robot position using navigation buttons
     const moveBot = (direction: 'N' | 'S' | 'E' | 'W', min: number, max: number): void => {
         const updatedPosition = { ...robotPosition }
         switch (direction) {
             case "N":
-                updatedPosition.x = updatedPosition.x < max ? robotPosition.x + 1 : updatedPosition.x;
+                if (updatedPosition.x < max) {
+                    updatedPosition.x = robotPosition.x + 1;
+                    setButtonClickError(false)
+                } else {
+                    setButtonClickError(true)
+                }
                 break;
             case "S":
-                updatedPosition.x = updatedPosition.x > min ? robotPosition.x - 1 : updatedPosition.x;
+                if (updatedPosition.x > min) {
+                    updatedPosition.x = robotPosition.x - 1;
+                    setButtonClickError(false)
+                } else {
+                    setButtonClickError(true)
+                }
                 break;
             case "W":
-                updatedPosition.y = updatedPosition.y > min ? robotPosition.y - 1 : updatedPosition.y;
+                if (updatedPosition.y > min) {
+                    updatedPosition.y = robotPosition.y - 1;
+                    setButtonClickError(false)
+                } else {
+                    setButtonClickError(true)
+                }
                 break;
             case "E":
-                updatedPosition.y = updatedPosition.y < max ? robotPosition.y + 1 : updatedPosition.y;
+                if (updatedPosition.y < max) {
+                    updatedPosition.y = robotPosition.y + 1;
+                    setButtonClickError(false)
+                } else {
+                    setButtonClickError(true)
+                }
                 break;
             default:
                 break;
@@ -40,8 +61,9 @@ const RobotGrid: React.FC<RobotGridProps> = ({ columns, rows }) => {
     }
 
     // Function: bot travel on cell click
-    const moveBotOnCellClick = (currentPosition: Cell) : void => {
+    const moveBotOnCellClick = (currentPosition: Cell): void => {
         setrobotPosition(currentPosition)
+        setButtonClickError(false)
     }
 
     // Use two for loops to generate the gird : first loop for rows
@@ -57,7 +79,6 @@ const RobotGrid: React.FC<RobotGridProps> = ({ columns, rows }) => {
                 {
                     currentCell.x === robotPosition.x && currentCell.y === robotPosition.y ? "robot" : ""
                 }
-                {currentCell.x}, {currentCell.y}
             </div>)
         } // End of column loop & Push row to grid
         grid.push(
@@ -70,19 +91,26 @@ const RobotGrid: React.FC<RobotGridProps> = ({ columns, rows }) => {
     return (
         <div className='bot-app'>
             Robot Grid
-            <div className='grid'>
+            <div className={`grid  ${buttonClickError ? 'error' : ''}`}>
                 {grid}
             </div>
+            <h4 className={`bot-position-text ${buttonClickError ? 'invalid' : ''}`}>
+                {
+                    !buttonClickError
+                        ? `Bot cell position X: ${robotPosition.x}, Y: ${robotPosition.y}`
+                        : 'Invalid position'
+                }
+            </h4>
             <div className='button-group'>
                 <div className='button-row'>
-                    <Button onClickAction={() => moveBot('N', 1, 5)} buttonText="Up" />
+                    <Button onClickAction={() => moveBot('N', 1, 5)} buttonText="North" />
                 </div>
                 <div className='button-middle-row'>
-                    <Button onClickAction={() => moveBot('W', 1, 5)} buttonText="Left" />
-                    <Button onClickAction={() => moveBot('E', 1, 5)} buttonText="Right" />
+                    <Button onClickAction={() => moveBot('W', 1, 5)} buttonText="West" />
+                    <Button onClickAction={() => moveBot('E', 1, 5)} buttonText="East" />
                 </div>
                 <div className='button-row'>
-                    <Button onClickAction={() => moveBot('S', 1, 5)} buttonText="Down" />
+                    <Button onClickAction={() => moveBot('S', 1, 5)} buttonText="South" />
                 </div>
             </div>
         </div>
