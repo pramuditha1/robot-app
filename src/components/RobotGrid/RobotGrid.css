@@ -19,5 +19,29 @@
 }
 
 .traveled-cell {
-    background-color: rgb(126, 131, 168);
+  background-color: rgb(126, 131, 168);
+}
+
+.bot-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button-group {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  cursor: auto;
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-around;
+}
+
+.button-middle-row {
+  display: flex;
+  justify-content: space-between;
+  width: 200px;
 }
