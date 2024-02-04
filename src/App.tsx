@@ -1,5 +1,5 @@
 import './App.css';
-import RobotGrid from './components/RobotGrid';
+import RobotGrid from './components/RobotGrid/RobotGrid';
 
 function App() {
   return (
