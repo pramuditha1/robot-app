@@ -90,7 +90,7 @@ const RobotGrid: React.FC<RobotGridProps> = ({ columns, rows }) => {
 
     return (
         <div className='bot-app'>
-            Robot Grid
+            <h1>Simulate Movement of a Simple Robot</h1>
             <div className={`grid  ${buttonClickError ? 'error' : ''}`}>
                 {grid}
             </div>
