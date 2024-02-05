@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from '../Button/Button';
 import "./RobotGrid.css"
 
@@ -16,7 +16,24 @@ const RobotGrid: React.FC<RobotGridProps> = ({ columns, rows }) => {
     const grid: JSX.Element[] = [];
     // State vairable to hold robot position and set initial state
     const [robotPosition, setrobotPosition] = useState<Cell>({ x: 1, y: 1 });
-    const [buttonClickError, setButtonClickError] = useState<boolean>(false);
+    const [buttonClickError, setButtonClickError] = useState<Boolean>(false);
+    const [teleportDelay, setTeleportDelay] = useState<number>(0);
+    const [teleportingPosition, setTeleportingPosition] = useState<Cell>();
+
+    useEffect(() => {
+        // Calculated delay will be applied here, after the timeout robot position wil be updated
+        const timeout = setTimeout(() => {
+            setrobotPosition({
+                x: teleportingPosition?.x ?? robotPosition.x,
+                y: teleportingPosition?.y ?? robotPosition.y
+            });
+            setButtonClickError(false)
+
+        }, teleportDelay)
+
+        return () => clearTimeout(timeout);
+    }, [teleportDelay])
+
 
     // Function: for move robot position using navigation buttons
     const moveBot = (direction: 'N' | 'S' | 'E' | 'W', min: number, max: number): void => {
@@ -60,10 +77,20 @@ const RobotGrid: React.FC<RobotGridProps> = ({ columns, rows }) => {
         setrobotPosition(updatedPosition)
     }
 
-    // Function: bot travel on cell click
+    const calculateTeleportingDelay = (currentPosition: Cell): Number => {
+        // Compare robot position with current position to calculate teleporting distace by x & y axis. consider only absolute values
+        const distanceX = Math.abs(currentPosition.x - robotPosition.x);
+        const distanceY = Math.abs(currentPosition.y - robotPosition.y);
+        return (distanceX + distanceY) * 100;
+    }
+
+    // Function: bot travel on cell click with a delay
     const moveBotOnCellClick = (currentPosition: Cell): void => {
-        setrobotPosition(currentPosition)
-        setButtonClickError(false)
+        // Set cell click position in a state variable to access inside the useEffect -> setTimeout
+        setTeleportingPosition(currentPosition);
+        // Calculate and set delay
+        const delay: number = Number(calculateTeleportingDelay(currentPosition))
+        setTeleportDelay(delay);
     }
 
     // Use two for loops to generate the gird : first loop for rows
