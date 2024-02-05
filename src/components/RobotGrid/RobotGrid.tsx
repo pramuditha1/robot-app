@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Button from '../Button/Button';
+import Bot from '../Robot/Bot';
 import "./RobotGrid.css"
 
 interface RobotGridProps {
@@ -33,7 +34,6 @@ const RobotGrid: React.FC<RobotGridProps> = ({ columns, rows }) => {
 
         return () => clearTimeout(timeout);
     }, [teleportDelay])
-
 
     // Function: for move robot position using navigation buttons
     const moveBot = (direction: 'N' | 'S' | 'E' | 'W', min: number, max: number): void => {
@@ -81,7 +81,7 @@ const RobotGrid: React.FC<RobotGridProps> = ({ columns, rows }) => {
         // Compare robot position with current position to calculate teleporting distace by x & y axis. consider only absolute values
         const distanceX = Math.abs(currentPosition.x - robotPosition.x);
         const distanceY = Math.abs(currentPosition.y - robotPosition.y);
-        return (distanceX + distanceY) * 100;
+        return (distanceX + distanceY) * 50;
     }
 
     // Function: bot travel on cell click with a delay
@@ -104,7 +104,7 @@ const RobotGrid: React.FC<RobotGridProps> = ({ columns, rows }) => {
                 className={`cell ${currentCell.x === robotPosition.x && currentCell.y === robotPosition.y ? "traveled-cell" : ""}`}
                 onClick={() => moveBotOnCellClick(currentCell)}>
                 {
-                    currentCell.x === robotPosition.x && currentCell.y === robotPosition.y ? "robot" : ""
+                    currentCell.x === robotPosition.x && currentCell.y === robotPosition.y ? <Bot size={40}/> : ""
                 }
             </div>)
         } // End of column loop & Push row to grid

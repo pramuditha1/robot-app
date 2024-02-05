@@ -9,7 +9,7 @@ const props = {
 
 test('renders learn robot grid application', () => {
     render(<RobotGrid {...props} />);
-    const linkElement = screen.getByText(/Robot Grid/i);
+    const linkElement = screen.getByText(/Simulate Movement of a Simple Robot/i);
     expect(linkElement).toBeInTheDocument();
 });
 
