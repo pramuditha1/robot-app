@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import East from '../../assets/icons/East';
+import North from '../../assets/icons/North';
+import South from '../../assets/icons/South';
+import West from '../../assets/icons/West';
 import Button from '../Button/Button';
 import Bot from '../Robot/Bot';
 import "./RobotGrid.css"
@@ -130,14 +134,14 @@ const RobotGrid: React.FC<RobotGridProps> = ({ columns, rows }) => {
             </h4>
             <div className='button-group'>
                 <div className='button-row'>
-                    <Button onClickAction={() => moveBot('N', 1, 5)} buttonText="North" />
+                    <Button onClickAction={() => moveBot('N', 1, 5)} buttonText="North" Icon={<North/>}/>
                 </div>
                 <div className='button-middle-row'>
-                    <Button onClickAction={() => moveBot('W', 1, 5)} buttonText="West" />
-                    <Button onClickAction={() => moveBot('E', 1, 5)} buttonText="East" />
+                    <Button onClickAction={() => moveBot('W', 1, 5)} buttonText="West" Icon={<West/>}/>
+                    <Button onClickAction={() => moveBot('E', 1, 5)} buttonText="East" Icon={<East/>}/>
                 </div>
                 <div className='button-row'>
-                    <Button onClickAction={() => moveBot('S', 1, 5)} buttonText="South" />
+                    <Button onClickAction={() => moveBot('S', 1, 5)} buttonText="South" Icon={<South/>}/>
                 </div>
             </div>
         </div>

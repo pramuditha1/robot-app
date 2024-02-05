@@ -4,13 +4,17 @@ import './Button.css'
 interface ButtonProps {
   onClickAction: () => void,
   buttonText: string,
+  Icon: React.ReactNode;
 }
-const Button: React.FC<ButtonProps> = ({ onClickAction, buttonText }) => {
+const Button: React.FC<ButtonProps> = ({ onClickAction, buttonText, Icon }) => {
   return (
     <button
       className='button'
       onClick={onClickAction}
-    >{buttonText}</button>
+    >
+      <span data-testid="button-icon">{Icon}</span>
+      {buttonText}
+    </button>
   )
 }
 
