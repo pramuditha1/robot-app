@@ -2,6 +2,10 @@
 
 Live demo: [Robot App](https://teleporting-robot.netlify.app/)
 
+# Solution & Requirement Analysis
+[Documentation](https://robot-application.atlassian.net/wiki/x/zoE)
+Need to login/ signup to atlasin confluence to view the documentation
+
 ## Overview
 
 This is a simple React-typescript application representing a robot moving on a grid. The robot can be moved using navigation buttons or upon clicking on a cell, and its position is displayed on the grid.
