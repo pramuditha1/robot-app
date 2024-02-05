@@ -3,7 +3,7 @@ import './Button.css'
 
 interface ButtonProps {
   onClickAction: () => void,
-  buttonText: string,
+  buttonText?: string,
   Icon: React.ReactNode;
 }
 const Button: React.FC<ButtonProps> = ({ onClickAction, buttonText, Icon }) => {

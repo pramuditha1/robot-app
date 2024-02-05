@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import East from '../../assets/icons/East';
-import North from '../../assets/icons/North';
-import South from '../../assets/icons/South';
-import West from '../../assets/icons/West';
+import IconDirection from '../../assets/icons/Direction';
+import { APPLICATION_HEADER, DELAY, GRID_BOUNDARY } from '../../uitls/Constants';
 import Button from '../Button/Button';
 import Bot from '../Robot/Bot';
 import "./RobotGrid.css"
@@ -85,7 +83,7 @@ const RobotGrid: React.FC<RobotGridProps> = ({ columns, rows }) => {
         // Compare robot position with current position to calculate teleporting distace by x & y axis. consider only absolute values
         const distanceX = Math.abs(currentPosition.x - robotPosition.x);
         const distanceY = Math.abs(currentPosition.y - robotPosition.y);
-        return (distanceX + distanceY) * 50;
+        return (distanceX + distanceY) * DELAY;
     }
 
     // Function: bot travel on cell click with a delay
@@ -108,7 +106,7 @@ const RobotGrid: React.FC<RobotGridProps> = ({ columns, rows }) => {
                 className={`cell ${currentCell.x === robotPosition.x && currentCell.y === robotPosition.y ? "traveled-cell" : ""}`}
                 onClick={() => moveBotOnCellClick(currentCell)}>
                 {
-                    currentCell.x === robotPosition.x && currentCell.y === robotPosition.y ? <Bot size={40}/> : ""
+                    currentCell.x === robotPosition.x && currentCell.y === robotPosition.y ? <Bot size={40} /> : ""
                 }
             </div>)
         } // End of column loop & Push row to grid
@@ -121,7 +119,7 @@ const RobotGrid: React.FC<RobotGridProps> = ({ columns, rows }) => {
 
     return (
         <div className='bot-app'>
-            <h1>Simulate Movement of a Simple Robot</h1>
+            <h1>{APPLICATION_HEADER}</h1>
             <div className={`grid  ${buttonClickError ? 'error' : ''}`}>
                 {grid}
             </div>
@@ -134,14 +132,26 @@ const RobotGrid: React.FC<RobotGridProps> = ({ columns, rows }) => {
             </h4>
             <div className='button-group'>
                 <div className='button-row'>
-                    <Button onClickAction={() => moveBot('N', 1, 5)} buttonText="North" Icon={<North/>}/>
+                    <Button
+                        buttonText="N"
+                        onClickAction={() => moveBot('N', GRID_BOUNDARY.min, GRID_BOUNDARY.max)}
+                        Icon={<IconDirection direction='N' size={40} />} />
                 </div>
                 <div className='button-middle-row'>
-                    <Button onClickAction={() => moveBot('W', 1, 5)} buttonText="West" Icon={<West/>}/>
-                    <Button onClickAction={() => moveBot('E', 1, 5)} buttonText="East" Icon={<East/>}/>
+                    <Button
+                        buttonText="W"
+                        onClickAction={() => moveBot('W', GRID_BOUNDARY.min, GRID_BOUNDARY.max)}
+                        Icon={<IconDirection direction='W' size={40} />} />
+                    <Button
+                        buttonText="E"
+                        onClickAction={() => moveBot('E', GRID_BOUNDARY.min, GRID_BOUNDARY.max)}
+                        Icon={<IconDirection direction='E' size={40} />} />
                 </div>
                 <div className='button-row'>
-                    <Button onClickAction={() => moveBot('S', 1, 5)} buttonText="South" Icon={<South/>}/>
+                    <Button
+                        buttonText="S"
+                        onClickAction={() => moveBot('S', GRID_BOUNDARY.min, GRID_BOUNDARY.max)}
+                        Icon={<IconDirection direction='S' size={40} />} />
                 </div>
             </div>
         </div>
