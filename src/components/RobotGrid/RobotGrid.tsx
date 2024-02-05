@@ -21,6 +21,7 @@ const RobotGrid: React.FC<RobotGridProps> = ({ columns, rows }) => {
     const [robotPosition, setrobotPosition] = useState<Cell>({ x: 1, y: 1 });
     const [buttonClickError, setButtonClickError] = useState<Boolean>(false);
     const [teleportDelay, setTeleportDelay] = useState<number>(0);
+    // Store teleporting position for make a delay
     const [teleportingPosition, setTeleportingPosition] = useState<Cell>();
 
     useEffect(() => {
